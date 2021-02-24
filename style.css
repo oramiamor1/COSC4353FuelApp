@@ -26,8 +26,8 @@
     width: 220px;
     margin: 35px auto;
     position: relative;
-    box-shadow: 0 0 20px 9px #ff91241f;
-    border-radius: 39px;
+    box-shadow: 0 0 20px 9px #36f2ffab;
+    border-radius: 30px;
 }
 
 .toggle-btn{
@@ -79,6 +79,7 @@
     border: 0;
     outline: none;
     border-radius: 30px;
+    margin-top: 50px;
 
 
 }
