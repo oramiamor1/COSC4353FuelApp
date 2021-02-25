@@ -23,7 +23,7 @@
                 <form id = "register" class = "inputs">
                     <input type = "text" class = "input-field" placeholder = "Username" required>
                     <input type = "text" class = "input-field" placeholder = "Password" required>
-                    <button type = "submit" class = "submit-btn" >Register</button>
+                    <button type = "submit" class = "submit-btn" onclick = "doSomething()">Register</button>
                 </form>
             </div>
         </div>
@@ -40,6 +40,13 @@
             }
 
             function login(){
+                x.style.left = "50px";
+                y.style.left = "450px";
+                z.style.left = "0";
+            }
+
+            function doSomething(){
+                alert("Registeration Successful");
                 x.style.left = "50px";
                 y.style.left = "450px";
                 z.style.left = "0px";
