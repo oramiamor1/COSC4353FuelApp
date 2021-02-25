@@ -1,0 +1,35 @@
+.background{
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url(blue.jpg);
+    position: static;
+    background-position: top;
+    background-size: cover;
+}
+
+
+.profile-bg{
+    text-align: center;
+    width: 380px;
+    height: 480px;
+    position: relative;
+    margin: 6% auto;
+    background: rgb(255, 255, 255);
+    padding: 5px;
+    overflow: hidden;
+    
+}
+
+.submit-btn{
+    width: 10;
+    cursor: pointer;
+    background: linear-gradient(to right, #10f7ff, #06ffac);
+    border: 0;
+}
+
+h1{
+    background-image: linear-gradient(to right, #2356a1, #69bed8);
+    position: relative;
+    
+}
+
