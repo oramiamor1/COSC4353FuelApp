@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fuel Quote Form</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="fffunc.js"></script>
+        <link rel="stylesheet" href="ffstyle_dv.css">
+    </head>
+    <body>
+        <div class = "background" >
+            <div class = "form">
+                <h1 id="title">Fuel Quote Form</h1>
+                <div class = "quote" >
+                    <p>*Fill out the form below to receive a fuel quote*</p>
+                </div>
+                <form id = "form1" class = "inputs" >
+                    <p>
+                    <label for="gallonsreq">Gallons Requested:</label>
+                    <input type = "text" class = "gallon_req" placeholder = "0" required>
+                    </p>
+
+                    <p>
+                    <label for="deliveryadr">Delivery Address:</label>
+                    <input type = "text" class = "gallon_req" placeholder = "112 Stoke Dr." required>
+                    </p>
+
+                    <p>
+                    <label for="ddate">Delivery Date:</label>
+                    <input type="date" name="ddate" class = "gallon_req" id="ddate" required />
+                    </p>
+
+                    <p>
+                    <label for="suggestedp">Suggested Price/Gallon:</label>
+                    <input type="number" name="suggestedp" class = "gallon_req" id="suggestedp" placeholder =3 readonly />
+                    </p>
+
+                    <p>
+                    <label for="totalamt">Total Amount Due:</label>
+                    <input type="text" name="totalamt" class = "gallon_req" id="totalamt" placeholder = 0 readonly />
+                    </p>
+                </form>
+                <p>
+                    <input type="submit" class = "submit-btn" value="Submit">
+                <p>
+                </div>
+        </div>
+    </body>
+</html>
