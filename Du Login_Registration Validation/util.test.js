@@ -2,7 +2,6 @@
 //make sure package.json contain this in script "test": "jest"
 //make sure your js file name contain .test or .spec (i use .test)
 //that's all, now just run npm test in terminal and it should work
-// npm test -- --coverage for coverage report on login/registration
 
 const { expect } = require("@jest/globals");
 const {testLogin, validateUser, checkPwd} = require("./util.js");
