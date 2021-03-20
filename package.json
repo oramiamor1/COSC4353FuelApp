@@ -2,11 +2,11 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "login_server.js",
+  "main": "ff_server.js",
   "scripts": {
     "test": "jest"
   },
-  "author": "Duy Pham",
+  "author": "William Cashman",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",

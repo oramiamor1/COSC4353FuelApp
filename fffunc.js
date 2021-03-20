@@ -1,5 +1,5 @@
 function calculateTotal() {
-    let x = $("#suggestedp").val() * $("#gallonsreq").val();
+    let x = ($("#suggestedp").val() * $("#gallonsreq").val()).toFixed(2);
     $("#totalamt").val(x);
 }
 
