@@ -25,21 +25,21 @@ function p_login(){
 
 
 
-function success_register(){
-    var r_user = document.querySelector('#r_user').value;
-    var r_pass = document.querySelector('#r_pass').value;
-    if(r_user.length <= 4 && r_pass.length <= 6){
-        alert("Please fill all required field correctly. Username must contain at least 4 characters. Password must have at least 6 characters");
-        return false;
-    }
-    else{
-        alert("Registeration Successful");
-        x.style.left = "50px";
-        y.style.left = "450px";
-        z.style.left = "0px";
-    }
+// function success_register(){
+//     var r_user = document.querySelector('#r_user').value;
+//     var r_pass = document.querySelector('#r_pass').value;
+//     if(r_user.length <= 4 && r_pass.length <= 6){
+//         alert("Please fill all required field correctly. Username must contain at least 4 characters. Password must have at least 6 characters");
+//         return false;
+//     }
+//     else{
+//         alert("Registeration Successful");
+//         x.style.left = "50px";
+//         y.style.left = "450px";
+//         z.style.left = "0px";
+//     }
     
-}
+// }
 
 function success_login(target){
     var l_user = document.querySelector('#l_user').value;
@@ -56,9 +56,9 @@ function success_login(target){
 }
 
 async function insertUserCred() {
-    var user = document.querySelector('#user1').value;
-    var pass = document.querySelector('#pass1').value;
-    console.log(description);
+    var user = document.querySelector('#r_user').value;
+    var pass = document.querySelector('#r_pass').value;
+    console.log(user);
   
     try {
   
@@ -72,7 +72,7 @@ async function insertUserCred() {
         body: JSON.stringify(body)
     });
   
-    location.reload();
+    // location.reload();
     return false;
   
     }catch (err) {
