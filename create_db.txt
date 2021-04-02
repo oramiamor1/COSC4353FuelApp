@@ -7,7 +7,6 @@ CREATE EXTENSION pgcrypto;
 CREATE TABLE UserCredentials(
 	userID SERIAL NOT NULL UNIQUE,
 	loginID TEXT NOT NULL UNIQUE,
-	email TEXT NOT NULL UNIQUE,
 	password TEXT NOT NULL,
 	PRIMARY KEY(userID),
 	CONSTRAINT "ClientInformation_userID_fkey" FOREIGN KEY (userID) REFERENCES UserCredentials(userID) ON DELETE CASCADE
@@ -19,10 +18,10 @@ CREATE TABLE ClientInformation(
 	address TEXT NOT NULL,
 	address2 TEXT,
 	city char(20) NOT NULL,
-	state char(2) NOT NULL,
-	zip integer NOT NULL,
+	state char(20) NOT NULL,
+	zip varchar(5) NOT NULL,
 	CONSTRAINT "ClientInformation_userID_fkey" FOREIGN KEY (userID) REFERENCES UserCredentials(userID) ON DELETE CASCADE
-};
+);
 
 CREATE TABLE FuelQuote(
 	fuelID SERIAL NOT NULL,

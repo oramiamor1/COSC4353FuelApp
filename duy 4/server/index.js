@@ -79,20 +79,21 @@ app.post('/formData',[
 })*/
 
 app.post("/profile", async (req, res) => {
-    fullname = req.body.fullname;
-    address = req.body.address;
-    address2 = req.body.address2;
+    fullname = req.body.name;
+    address = req.body.add;
+    address2 = req.body.add2;
     city = req.body.city;
     state = req.body.state;
-    zipcode = req.body.zipcode;
-
+    zipcode = req.body.zip; 
+    console.log("work?");
     try {
       console.log(req.body)
+      console.log(`INSERT INTO ClientInformation VALUES(0001,'${fullname}','${address}','${address2}','${city}','${state}','${zipcode}'); `)
       const newTodo = await pool.query(
-        `INSERT INTO clientinformation VALUES(0001,'${fullname}','${address}','${address2}','${city}','${state}','${zipcode}'); `
+        `INSERT INTO ClientInformation VALUES(0001,'${fullname}','${address}','${address2}','${city}','${state}','${zipcode}'); `
       );
   
-      res.json(newTodo.rows[0]);
+      //res.json(newTodo.rows[0]);
     } catch (err) {
       console.error(err.message);
     }
