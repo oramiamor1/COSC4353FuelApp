@@ -12,8 +12,9 @@ app.post("/register", async (req, res) => {
     pass = req.body.pass;
     try {
       console.log(req.body)
+      //this will encrypt the password once it is made
       const newTodo = await pool.query(
-        `INSERT INTO UserCredentials VALUES(0001,'${user}','${pass}'); `
+        `INSERT INTO UserCredentials VALUES(0001,'${user}',crypt('firstpass',gen_salt('${pass}'))); `
       );
   
       res.json(newTodo.rows[0]);
