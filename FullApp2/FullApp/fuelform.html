@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fuel Quote Form</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="client/css/ffstyle.css">
+    </head>
+    <body>
+        <div class = "background" >
+            <div class = "form">
+                <h1 id="title">Fuel Quote Form</h1>
+                <div class = "quote" >
+                    <p>*Fill out the form below to receive a fuel quote*</p>
+                </div>
+                <form id = "form1" class = "inputs" method = "POST" >
+                    <p>
+                    <label for="gallonsreq">Gallons Requested:</label>
+                    <input type = "number" name="gallonsreq" class = "gallon_req" id="gallonsreq" placeholder = "0" required>
+                  </p>
+
+                    <p>
+                    <label for="deliveryadr">Delivery Address:</label>
+                    <input type = "address" name="deliveryadr" class = "delivery_adr" id="deliveryadr" placeholder = "112 Stoke Dr." required>
+                  </p>
+
+                    <p>
+                    <label for="ddate">Delivery Date:</label>
+                    <input type="date" name="ddate" class = "d_date" id="ddate" required />
+                  </p>
+
+                    <p>
+                    <label for="suggestedp">Suggested Price/Gallon:</label>
+                    <input type="number" name="suggestedp" class = "suggested_p" id="suggestedp" value =3 readonly />
+                  </p>
+
+                    <p>
+                    <label for="totalamt">Total Amount Due:</label>
+                    <input type="number" name="totalamt" class = "total_amt" id="totalamt" placeholder = 0 readonly />
+                  </p>
+                </form>
+                <p>
+                    <button type="submit" class = "submit-btn" onclick = insertProf()>Submit</button>
+                <p>
+                </div>
+        </div>
+        <script src = "client/js/fuelF.js"></script>
+    </body>
+</html>
