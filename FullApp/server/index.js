@@ -2,10 +2,16 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
+const { check, validationResult } = require('express-validator')
 
 //middleware
 app.use(cors());
 app.use(express.json()); //req.body
+
+let urlencoded = express.urlencoded({extended: true})
+app.use(express.json());
+app.use(urlencoded);
+app.use(express.static(__dirname + '/'))
 
 //Du Code
 app.post("/register", async (req, res) => {
