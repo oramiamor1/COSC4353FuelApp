@@ -29,5 +29,5 @@ CREATE TABLE FuelQuote(
 	deliveryAdd TEXT NOT NULL,
 	deliveryDate DATE NOT NULL,
 	total integer NOT NULL,
-	PRIMARY KEY(fueldID)
-};
+	PRIMARY KEY(fuelID)
+);
