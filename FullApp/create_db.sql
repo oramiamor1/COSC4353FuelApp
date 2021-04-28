@@ -24,10 +24,12 @@ CREATE TABLE ClientInformation(
 
 CREATE TABLE FuelQuote(
 	userID SERIAL NOT NULL,
+	orderid integer NOT NULL UNIQUE,
 	gallonsReq integer NOT NULL,
 	deliveryAdd TEXT NOT NULL,
 	deliveryDate DATE NOT NULL,
 	suggestedPrice float NOT NULL,
-	total float NOT NULL
+	total float NOT NULL,
+	PRIMARY KEY(orderid),
 	CONSTRAINT f_userID_fk FOREIGN KEY (userID) REFERENCES UserCredentials(userID) ON DELETE CASCADE
 );
