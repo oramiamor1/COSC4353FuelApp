@@ -1,5 +1,6 @@
 var uid = findLastUID();
 var curUID = 0;
+var hist = []
 
 async function success_login(){
     var l_user = document.querySelector('#l_user').value;
@@ -17,7 +18,7 @@ async function success_login(){
         const jsonData = await response.json();
         let data = [];
         data = jsonData;
-        if(data.length == 1)
+        if(data[0].count == 1)
         {
             console.log("yes");
             const result = await findUID(l_user);
@@ -103,6 +104,56 @@ async function findUID(l_user){
       console.log(err.message);
     }
 }
+
+async function selectHistory() {
+    var fac = curUID;
+    console.log(fac);
+    try {
+        // window.location.href = 'orderhistory.html';
+      const response = await fetch(`http://localhost:5000/orderHist/${fac}`);
+      const jsonData = await response.json();
+    //   window.location.href = 'orderhistory.html';
+      setHist(jsonData);
+      console.log(jsonData);
+      displayHist();
+    } catch (err) {
+      console.log(err.message);
+    }
+
+}
+
+const getHist = async () => {
+    let result = await selectHistory;
+}
+
+const setHist = (data) => {
+    hist = data;
+}
+
+if (document.URL.includes("orderhistory.html")) {
+    selectHistory();
+  }
+
+const displayHist = () => {
+    const orderTable = document.querySelector('#order_hist');
+  
+    let tableHTML = "";
+    hist.map(FuelQuote => {
+      tableHTML +=
+        `<tr key=${FuelQuote.userid}>
+        <td >${FuelQuote.orderid}</td>
+        <td>${FuelQuote.gallonsreq}</td>
+        <td>${FuelQuote.deliveryadd}</td>
+        <td>${FuelQuote.deliverydate}</td>
+        <td>${FuelQuote.suggestedprice}</td>
+        <td>${FuelQuote.total}</td>
+        </tr>`;
+    })
+    orderTable.innerHTML = tableHTML;
+}
+
+
+
 
 //duy
 async function insertProf() {
