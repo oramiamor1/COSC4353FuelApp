@@ -80,6 +80,18 @@ app.get('/uid1', async (req, res) => {
   }
 });
 
+app.get('/orderHist/:fac', async (req, res) => {
+  const {fac} = req.params;
+  console.log("SELECT * FROM fuelquote where userid = ${fac} ORDER BY orderid");
+  try {
+    const allOrder = await pool.query(`SELECT * FROM fuelquote WHERE userid = ${fac} ORDER BY orderid;`);
+    console.log(allOrder.rows);
+    res.json(allOrder.rows);
+  } catch (err) {
+    console.log(err.message);
+  }
+});
+
 //William Code
 app.get('/',(request, response) => {
   response.sendFile(path.join(__dirname + '/fuelform.html'))
