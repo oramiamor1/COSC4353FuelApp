@@ -133,3 +133,15 @@
     margin-right: auto;
 }
 
+.back2{
+    width: 12%;
+    padding: 10px 30px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    outline: none;
+    border-radius: 30px;
+    margin-top: 90px;
+    
+}
+
