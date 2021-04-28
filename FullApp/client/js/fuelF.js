@@ -22,6 +22,11 @@ async function insertProf() {
     }
 
     var margin = currentPrice * (locationFac - historyFac + gallonsreqFac + profitFac);
+    var suggestedPrice = currentPrice + margin;
+    var totalAmount = gallonsreq * suggestedPrice;
+
+    document.getElementById("suggestedp").innerHTML = suggestedPrice;
+    document.getElementById("totalamt").innerHTML = totalAmount;
     ////////
     try {
     const body = {
