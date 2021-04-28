@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const cors = require("cors");
 const pool = require("./db");
-const { check, validationResult } = require('express-validator')
+const { check, validationResult } = require('express-validator');
 
 //middleware
 app.use(cors());
@@ -12,7 +12,7 @@ app.use(express.json()); //req.body
 let urlencoded = express.urlencoded({extended: true})
 app.use(express.json());
 app.use(urlencoded);
-app.use(express.static(__dirname + '/'))
+app.use(express.static(__dirname + '/'));
 
 //Du Code
 app.post("/register", async (req, res) => {
@@ -128,7 +128,7 @@ app.get('/findstate/:fac', async (req, res) => {
     console.log(req.body)
     //search state
     const newTodo = await pool.query(
-      `select state from clientinformation where userid = ${fac} limit;`
+      `select state from clientinformation where userid = ${fac} limit 1;`
     );
       console.log(newTodo.rows);
     res.json(newTodo.rows);
@@ -144,6 +144,20 @@ app.get('/oid/:fac', async (req, res) => {
     //search for latest orderid
     const newTodo = await pool.query(
       `select orderid from fuelquote where userid = ${fac} order by orderid desc limit 1;`
+    );
+      console.log(newTodo.rows);
+    res.json(newTodo.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+app.get('/checkProfile/:fac', async (req, res) => {
+  const {fac} = req.params;
+  try {
+    console.log(req.body)
+    const newTodo = await pool.query(
+      `select count(*) from clientinformation where userid = ${fac};`
     );
       console.log(newTodo.rows);
     res.json(newTodo.rows);
@@ -183,7 +197,7 @@ app.post('/formData',[
   response.status(202).json({
       success:'Ok'
   })
-})
+});
 
 app.post("/fuelform", async (req, res) => {
   userid = req.body.userid;
@@ -211,7 +225,7 @@ app.post("/fuelform", async (req, res) => {
 //Duy Code
 app.get('/',(request, response) => {
   response.sendFile(path.join(__dirname + '/profile_dv.html'))
-})
+});
 
 app.post('/formData',[
   check('fullname')
@@ -253,7 +267,7 @@ app.post('/formData',[
   response.status(202).json({
       success:'Ok'
   })
-})
+});
 
 
 //ROUTES//

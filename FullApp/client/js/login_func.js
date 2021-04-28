@@ -7,7 +7,6 @@ var curUID = 0;
 
 //current oderid
 var oid = 0;
-var curOID = 0;
 
 var hist = []
 //current address
@@ -247,44 +246,71 @@ if(document.URL.includes("transition.html")){
     findLastOID();
 }
 
+async function checkProfile(){
+    var fac = localStorage.curUID;
+    try {
+        const response = await fetch(`http://localhost:5000/checkProfile/${fac}`);
+        const jsonData = await response.json();
+          const data = jsonData;
+          if(data[0].count > 0){
+              alert("Sorry you already have a profile!");
+          }
+          else{
+              const result = await insertProf();
+          }
+  
+    }catch (err) {
+        console.log(err.message);
+    }
+}
+
 function change(){
     let ticket = document.getElementById('gallonsreq').value;
+    if(ticket > 0){
+        var locationFac = 0.04;
+        var historyFac = 0.01;
+        var gallonsreqFac = 0.03;
+        var profitFac = 0.1;
 
-    var locationFac = 0.04;
-    var historyFac = 0.1;
-    var gallonsreqFac = 0.03;
-    var profitFac = 0.1;
+        var currentPrice = 1.50;
 
-    var currentPrice = 1.50;
+        var state = localStorage.curState;
+        var oldGallons = localStorage.oldGal;
+        console.log(state.length);
+        if(state.substr(0,5) == 'Texas'){
+            console.log("Yes texas");
+            locationFac = 0.02;
+        }
+        console.log(locationFac);
 
-    var state = localStorage.curState;
-    var oldGallons = localStorage.oldGal;
-    
-    if(state == 'Texas'){
-        locationFac = 0.02;
-    }
+        if (ticket > 1000){
+            gallonsreqFac = 0.02;
+        }
 
-    if (ticket > 1000){
-        gallonsreqFac = 0.02;
-    }
+        if(oldGallons > 0){
+            var margin = currentPrice * (locationFac - historyFac + gallonsreqFac + profitFac);
+        }
+        else{
+            var margin = currentPrice * (locationFac  + gallonsreqFac + profitFac);
+        }
 
-    if(oldGallons > 0){
-        var margin = currentPrice * (locationFac - historyFac + gallonsreqFac + profitFac);
+        var suggestedPrice = currentPrice + margin;
+        var totalAmount = ticket * suggestedPrice;
+
+        document.getElementById("suggestedp").value = suggestedPrice;
+        document.getElementById('totalamt').value = totalAmount;
+
+
+        localStorage.gal = ticket;
+        localStorage.sug = suggestedPrice;
+        localStorage.tot = totalAmount;
     }
     else{
-        var margin = currentPrice * (locationFac  + gallonsreqFac + profitFac);
+        alert("CANNOT BE NEGATIVE");
+        window.location.href = "transition.html";
     }
 
-    var suggestedPrice = currentPrice + margin;
-    var totalAmount = ticket * suggestedPrice;
-
-    document.getElementById("suggestedp").value = suggestedPrice;
-    document.getElementById('totalamt').value = totalAmount;
-
-
-    localStorage.gal = ticket;
-    localStorage.sug = suggestedPrice;
-    localStorage.tot = totalAmount;
+    
 }
 
 
