@@ -92,6 +92,66 @@ app.get('/orderHist/:fac', async (req, res) => {
   }
 });
 
+app.get('/findadd/:fac', async (req, res) => {
+  const {fac} = req.params;
+  try {
+    console.log(req.body)
+    //search for latest userID
+    const newTodo = await pool.query(
+      `select address from clientinformation where userid = '${fac}' order by address desc limit 1;`
+    );
+      console.log(newTodo.rows);
+    res.json(newTodo.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+app.get('/findgal/:fac', async (req, res) => {
+  const {fac} = req.params;
+  try {
+    console.log(req.body)
+    //search gallon
+    const newTodo = await pool.query(
+      `select count(gallonsreq) from fuelquote where userid = ${fac};`
+    );
+      console.log(newTodo.rows);
+    res.json(newTodo.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+app.get('/findstate/:fac', async (req, res) => {
+  const {fac} = req.params;
+  try {
+    console.log(req.body)
+    //search state
+    const newTodo = await pool.query(
+      `select state from clientinformation where userid = ${fac} limit;`
+    );
+      console.log(newTodo.rows);
+    res.json(newTodo.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+app.get('/oid/:fac', async (req, res) => {
+  const {fac} = req.params;
+  try {
+    console.log(req.body)
+    //search for latest orderid
+    const newTodo = await pool.query(
+      `select orderid from fuelquote where userid = ${fac} order by orderid desc limit 1;`
+    );
+      console.log(newTodo.rows);
+    res.json(newTodo.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 //William Code
 app.get('/',(request, response) => {
   response.sendFile(path.join(__dirname + '/fuelform.html'))
@@ -126,16 +186,21 @@ app.post('/formData',[
 })
 
 app.post("/fuelform", async (req, res) => {
+  userid = req.body.userid;
+  orderid = req.body.orderid;
   gallonsrequested = req.body.gallonsreq;
   deliveryaddress = req.body.deliveryadr;
   deliverydate = req.body.ddate;
+  sug = req.body.suggested;
+  total = req.body.total;
   console.log("work?");
   try {
     console.log(req.body)
-    console.log(`INSERT INTO FuelQuote VALUES(0001,'${gallonsrequested}','${deliveryaddress}','${deliverydate}'); `)
+    console.log(`INSERT INTO FuelQuote VALUES(${userid},${orderid},${gallonsrequested},'${deliveryaddress}','${deliverydate}',${sug},${total}); `)
     const newTodo = await pool.query(
-      `INSERT INTO FuelQuote VALUES(0001,'${gallonsrequested}','${deliveryaddress}','${deliverydate}'); `
+      `INSERT INTO FuelQuote VALUES(${userid},${orderid},${gallonsrequested},'${deliveryaddress}','${deliverydate}',${sug},${total}); `
     );
+    res.json(newTodo.rows);
 
   } catch (err) {
     console.error(err.message);

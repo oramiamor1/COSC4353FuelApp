@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Fuel Quote Form</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
         <link rel="stylesheet" href="client/css/ffstyle.css">
     </head>
     <body>
@@ -15,7 +15,7 @@
                 <form id = "form1" class = "inputs" method = "POST" >
                     <p>
                     <label for="gallonsreq">Gallons Requested:</label>
-                    <input type = "number" name="gallonsreq" class = "gallon_req" id="gallonsreq" placeholder = "0" required>
+                    <input type = "number" name="gallonsreq" class = "gallon_req" id="gallonsreq" oninput = "change()" placeholder = "0" required>
                     </p>
 
                     <p>
@@ -39,7 +39,7 @@
                     </p>
 
                     <p>
-                    <button type="submit" class = "submit-btn" onclick = "insertfuelF()">Submit</button>
+                    <button type="button" class = "submit-btn" onclick = "insertfuelF()">Submit</button>
                     <p>
                 </form>
                 
@@ -51,6 +51,6 @@
                 
                 </div>
         </div>
-        <script src = "client/js/fuelF.js"></script>
+        <script src = "client/js/login_func.js"></script>
     </body>
 </html>

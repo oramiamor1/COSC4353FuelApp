@@ -1,6 +1,26 @@
+// let today = new Date().toISOString().substr(0, 10);
+// document.querySelector("#ddate").value = document.querySelector("#ddate").min = today;
+
+//current userid
 var uid = findLastUID();
 var curUID = 0;
+
+//current oderid
+var oid = 0;
+var curOID = 0;
+
 var hist = []
+//current address
+var curAdd = '';
+
+
+
+//calc
+var curState = '';
+var oldGal = 0;
+var gal = 0;
+var sug = 0;
+var tot = 0;
 
 //fetch user/pass to make sure it's in db, if it is, save curuid
 async function success_login(){
@@ -94,6 +114,28 @@ async function findLastUID(){
     }
 }
 
+async function findLastOID(){
+    var fac = localStorage.curUID;
+    try {
+        const response = await fetch(`http://localhost:5000/oid/${fac}`);
+        const jsonData = await response.json();
+        let data = [];
+        data = jsonData;
+        // console.log(data);
+        if(data.length == 0 || data.length == null){
+            localStorage.oid = 0;
+        }
+        else{
+            localStorage.oid = data[0].orderid;
+            // const result = await findUID(cur_user);
+        }
+        console.log(localStorage.oid);
+  
+    }catch (err) {
+      console.log(err.message);
+    }
+}
+
 
 
 async function findUID(l_user){
@@ -115,14 +157,13 @@ async function findUID(l_user){
     }
 }
 
+
 async function selectHistory() {
     var fac = localStorage.curUID;
     console.log(fac);
     try {
-        // window.location.href = 'orderhistory.html';
       const response = await fetch(`http://localhost:5000/orderHist/${fac}`);
       const jsonData = await response.json();
-    //   window.location.href = 'orderhistory.html';
       setHist(jsonData);
       console.log(jsonData);
       displayHist();
@@ -132,9 +173,59 @@ async function selectHistory() {
 
 }
 
-// const getHist = async () => {
-//     let result = await selectHistory;
-// }
+async function findAdd() {
+    var fac = localStorage.curUID;
+    console.log(fac);
+    try {
+      const response = await fetch(`http://localhost:5000/findadd/${fac}`);
+      const jsonData = await response.json();
+        const data = jsonData;
+        localStorage.curAdd = data[0].address;
+        console.log(localStorage.curAdd);
+        displayAdd();
+
+    } catch (err) {
+      console.log(err.message);
+    }
+
+}
+
+async function findGal() {
+    var fac = localStorage.curUID;
+    // console.log(fac);
+    try {
+      const response = await fetch(`http://localhost:5000/findgal/${fac}`);
+      const jsonData = await response.json();
+        const data = jsonData;
+        localStorage.oldGal = data[0].count;
+        console.log(localStorage.oldGal);
+
+    } catch (err) {
+      console.log(err.message);
+    }
+
+}
+
+async function findState() {
+    var fac = localStorage.curUID;
+    // console.log(fac);
+    try {
+      const response = await fetch(`http://localhost:5000/findState/${fac}`);
+      const jsonData = await response.json();
+        const data = jsonData;
+        localStorage.curState = data[0].state;
+        console.log(localStorage.curState);
+
+    } catch (err) {
+      console.log(err.message);
+    }
+
+}
+
+const displayAdd = () => {
+    // console.log(localStorage.curAdd);
+    document.getElementById('deliveryadr').value = localStorage.curAdd;
+}
 
 const setHist = (data) => {
     hist = data;
@@ -144,9 +235,58 @@ if (document.URL.includes("orderhistory.html")) {
     selectHistory();
 }
 
-if (document.URL.includes("transition.html")) {
-    console.log(localStorage.curUID);
+if (document.URL.includes("fuelform.html")) {
+    let today = new Date().toISOString().substr(0, 10);
+    document.querySelector("#ddate").value = document.querySelector("#ddate").min = today;
+    findAdd();
+    findGal();
 }
+
+if(document.URL.includes("transition.html")){
+    findState();
+    findLastOID();
+}
+
+function change(){
+    let ticket = document.getElementById('gallonsreq').value;
+
+    var locationFac = 0.04;
+    var historyFac = 0.1;
+    var gallonsreqFac = 0.03;
+    var profitFac = 0.1;
+
+    var currentPrice = 1.50;
+
+    var state = localStorage.curState;
+    var oldGallons = localStorage.oldGal;
+    
+    if(state == 'Texas'){
+        locationFac = 0.02;
+    }
+
+    if (ticket > 1000){
+        gallonsreqFac = 0.02;
+    }
+
+    if(oldGallons > 0){
+        var margin = currentPrice * (locationFac - historyFac + gallonsreqFac + profitFac);
+    }
+    else{
+        var margin = currentPrice * (locationFac  + gallonsreqFac + profitFac);
+    }
+
+    var suggestedPrice = currentPrice + margin;
+    var totalAmount = ticket * suggestedPrice;
+
+    document.getElementById("suggestedp").value = suggestedPrice;
+    document.getElementById('totalamt').value = totalAmount;
+
+
+    localStorage.gal = ticket;
+    localStorage.sug = suggestedPrice;
+    localStorage.tot = totalAmount;
+}
+
 
 
 const displayHist = () => {
@@ -170,41 +310,49 @@ const displayHist = () => {
 
 
 
+
+
 async function insertfuelF() {
-    var gallonsreq = document.querySelector('#gallonsreq').value;
-    var deliveryadr = document.querySelector('#deliveryadr').value;
-    var ddate = document.querySelector('#ddate').value;
-    console.log(gallonsreq);
-    /////
-    var state = document.querySelector('#state').value;
+    // var gallonsreq = document.querySelector('#gallonsreq').value;
+    // var deliveryadr = document.querySelector('#deliveryadr').value;
+    // var ddate = document.querySelector('#ddate').value;
+    // console.log(gallonsreq);
+    // /////
+    // var state = document.querySelector('#state').value;
 
-    var locationFac = 0.04;
-    var historyFac = 0;
-    var gallonsreqFac = 0.03;
-    var profitFac = 0.1;
+    // var locationFac = 0.04;
+    // var historyFac = 0;
+    // var gallonsreqFac = 0.03;
+    // var profitFac = 0.1;
 
-    var currentPrice = 1.50;
+    // var currentPrice = 1.50;
 
-    if(state == 'Texas'){
-        locationFac = 0.02;
-    }
+    // if(state == 'Texas'){
+    //     locationFac = 0.02;
+    // }
 
-    if (gallonsreq > 1000){
-        gallonsreqFac = 0.02;
-    }
+    // if (gallonsreq > 1000){
+    //     gallonsreqFac = 0.02;
+    // }
 
-    var margin = currentPrice * (locationFac - historyFac + gallonsreqFac + profitFac);
-    var suggestedPrice = currentPrice + margin;
-    var totalAmount = gallonsreq * suggestedPrice;
+    // var margin = currentPrice * (locationFac - historyFac + gallonsreqFac + profitFac);
+    // var suggestedPrice = currentPrice + margin;
+    // var totalAmount = gallonsreq * suggestedPrice;
 
-    document.getElementById("suggestedp").innerHTML = suggestedPrice;
-    document.getElementById("totalamt").innerHTML = totalAmount;
+    // document.getElementById("suggestedp").innerHTML = suggestedPrice;
+    // document.getElementById("totalamt").innerHTML = totalAmount;
     ////////
+    var ddate = document.getElementById('ddate').value;
+    var newoid = localStorage.oid+1;
     try {
     const body = {
-        gallonsreq: gallonsreq, 
-        deliveryadr: deliveryadr,
+        userid: localStorage.curUID,
+        orderid: newoid,
+        gallonsreq: localStorage.gal, 
+        deliveryadr: localStorage.curAdd,
         ddate: ddate,
+        suggested: localStorage.sug,
+        total: localStorage.tot 
     };
 
     const response = await fetch(`http://localhost:5000/fuelform`, {
@@ -213,8 +361,8 @@ async function insertfuelF() {
         body: JSON.stringify(body)
     });
   
-    location.reload();
-    return false;
+    alert('Success!');
+    window.location.href = 'transition.html';
   
     }catch (err) {
       console.log(err.message);
