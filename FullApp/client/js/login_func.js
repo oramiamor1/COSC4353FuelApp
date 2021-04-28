@@ -17,10 +17,9 @@ async function success_login(){
         const jsonData = await response.json();
         let data = [];
         data = jsonData;
-        console.log(data[0].count);
-        if(data[0].count == 1)
+        if(data.length == 1)
         {
-            alert("Login Succesful");
+            console.log("yes");
             const result = await findUID(l_user);
             window.location.href = 'transition.html';
         }
