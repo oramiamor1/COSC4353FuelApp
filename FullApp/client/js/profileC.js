@@ -55,6 +55,14 @@ async function insertProf() {
     var city = document.querySelector('#city').value;
     var state = document.querySelector('#state').value;
     var zip = document.querySelector('#zip').value;
+    if(name.length == 0 || name.length > 50
+        || add.length == 0 || add.length > 100
+        || city.length == 0 || city.length > 100
+        || zip.length < 5 || zip.length > 9){
+        alert("Please fill all required field.");
+        return false;
+    }
+
     console.log(name);
   
     try {
