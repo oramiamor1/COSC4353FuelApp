@@ -2,12 +2,14 @@ var uid = findLastUID();
 var curUID = 0;
 var hist = []
 
+//fetch user/pass to make sure it's in db, if it is, save curuid
 async function success_login(){
     var l_user = document.querySelector('#l_user').value;
     var l_pass = document.querySelector('#l_pass').value;
     cur_user = l_user;
     console.log(l_user);
     var fac = l_user + ',' + l_pass;
+    //validation-ish
     if(l_user.length == 0 || l_pass.length == 0){
         alert("Please fill all required field.");
         return false;
@@ -106,7 +108,7 @@ async function findUID(l_user){
         // setcurUID(data[0].userid);
         localStorage.curUID = data[0].userid;
         // curUID = data[0].userid;
-        alert("curuser = " +cur_user + " curuid = " + localStorage.curUID);
+        // alert("curuser = " +cur_user + " curuid = " + localStorage.curUID);
   
     }catch (err) {
       console.log(err.message);
@@ -114,7 +116,7 @@ async function findUID(l_user){
 }
 
 async function selectHistory() {
-    var fac = curUID;
+    var fac = localStorage.curUID;
     console.log(fac);
     try {
         // window.location.href = 'orderhistory.html';
@@ -223,7 +225,7 @@ async function insertfuelF() {
 
 //duy
 async function insertProf() {
-    alert(curUID);
+    // alert(curUID);
     var userid = localStorage.curUID;
     var name = document.querySelector('#name').value;
     var add = document.querySelector('#add').value;
