@@ -1,4 +1,4 @@
-/* CSS styles */
+ /* CSS styles */
 
 *{
     margin: 0;
@@ -15,16 +15,23 @@
 }
 #title {
 	margin: 35px auto;
+	font-size: 40px;
     background-image: linear-gradient(315deg, #10f7ff,#06ffac);
     color: white;
 	text-align: center;
     font-family: Copperplate;
 }
 
+td, th {
+	border: 1px solid #dddddd;        
+	text-align: center;
+	padding: 8px;
+   }
+
 .table {
 	font-family: courier;
 	text-align: center;
-	width: 500px;
+	width: 1000px;
 	height: auto;
 	position: relative;
 	margin: 5% auto;
