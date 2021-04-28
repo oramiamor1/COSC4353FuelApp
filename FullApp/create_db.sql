@@ -24,6 +24,7 @@ CREATE TABLE ClientInformation(
 );
 
 CREATE TABLE FuelQuote(
+	userID SERIAL NOT NULL,
 	gallonsReq integer NOT NULL,
 	deliveryAdd TEXT NOT NULL,
 	deliveryDate DATE NOT NULL,

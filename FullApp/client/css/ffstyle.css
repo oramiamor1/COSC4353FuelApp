@@ -105,6 +105,20 @@
 }
 
 
+.getquote-btn{
+    width: 25%;
+    padding: 10px 30px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    background: linear-gradient(to right, #10f7ff,#06ffac);
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+    margin-top: 10px;
+    margin-right: auto;
+}
+
 .submit-btn{
     width: 25%;
     padding: 10px 30px;
@@ -115,5 +129,7 @@
     border: 0;
     outline: none;
     border-radius: 30px;
-    margin-top: 60px;
+    margin-top: 10px;
+    margin-right: auto;
 }
+

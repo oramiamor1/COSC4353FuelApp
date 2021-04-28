@@ -166,6 +166,7 @@ app.post('/formData',[
 
 //ROUTES//
 app.post("/profile", async (req, res) => {
+  userid = req.body.userid;
   fullname = req.body.name;
   address = req.body.add;
   address2 = req.body.add2;
@@ -175,9 +176,9 @@ app.post("/profile", async (req, res) => {
   console.log("work?");
   try {
     console.log(req.body)
-    console.log(`INSERT INTO ClientInformation VALUES(0001,'${fullname}','${address}','${address2}','${city}','${state}','${zipcode}'); `)
+    console.log(`INSERT INTO ClientInformation VALUES(${userid},'${fullname}','${address}','${address2}','${city}','${state}','${zipcode}'); `)
     const newTodo = await pool.query(
-      `INSERT INTO ClientInformation VALUES(0001,'${fullname}','${address}','${address2}','${city}','${state}','${zipcode}'); `
+      `INSERT INTO ClientInformation VALUES(${userid},'${fullname}','${address}','${address2}','${city}','${state}','${zipcode}'); `
     );
 
     //res.json(newTodo.rows[0]);
