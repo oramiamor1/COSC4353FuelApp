@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const path = require('path');
 const cors = require("cors");
 const pool = require("./db");
 const { check, validationResult } = require('express-validator')
@@ -15,22 +16,58 @@ app.use(express.static(__dirname + '/'))
 
 //Du Code
 app.post("/register", async (req, res) => {
+    userid = req.body.userid;
     user = req.body.user;
     pass = req.body.pass;
     try {
       console.log(req.body)
       //this will encrypt the password once it is made
       const newTodo = await pool.query(
-        `INSERT INTO UserCredentials VALUES(0001,'${user}',crypt('firstpass',gen_salt('${pass}'))); `
+        `INSERT INTO UserCredentials VALUES(${userid},'${user}',crypt('${pass}',gen_salt('bf'))); `
       );
   
-      res.json(newTodo.rows[0]);
     } catch (err) {
       console.error(err.message);
     }
 });
 
+app.get('/login/:fac', async (req, res) => {
+  const { fac } = req.params;
+  var user = fac.split(',')[0];
+  var pass = fac.split(',')[1];
+  try {
+    console.log(req.body)
+    //this will encrypt the password once it is made
+    const newTodo = await pool.query(
+      `select count(userid) from usercredentials where loginid = '${user}' and password = crypt('${pass}',password); `
+    );
+
+    res.json(newTodo.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+app.get('/uid', async (req, res) => {
+
+  try {
+    console.log(req.body)
+    //this will encrypt the password once it is made
+    const newTodo = await pool.query(
+      `select userid from usercredentials order by userid desc limit 1;`
+    );
+
+    res.json(newTodo.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 //William Code
+app.get('/',(request, response) => {
+  response.sendFile(path.join(__dirname + '/fuelform.html'))
+})
+
 app.post('/formData',[
   check('gallonsreq')
   .not().isEmpty().withMessage('Name cannot be empty.')
@@ -66,9 +103,9 @@ app.post("/fuelform", async (req, res) => {
   console.log("work?");
   try {
     console.log(req.body)
-    console.log(`INSERT INTO ClientInformation VALUES(0001,'${gallonsreq}','${deliveryadr}','${ddate}'); `)
+    console.log(`INSERT INTO FuelQuote VALUES(0001,'${gallonsrequested}','${deliveryaddress}','${deliverydate}'); `)
     const newTodo = await pool.query(
-      `INSERT INTO ClientInformation VALUES(0001,'${gallonsreq}','${deliveryadr}','${ddate}'); `
+      `INSERT INTO FuelQuote VALUES(0001,'${gallonsrequested}','${deliveryaddress}','${deliverydate}'); `
     );
 
   } catch (err) {
@@ -78,6 +115,10 @@ app.post("/fuelform", async (req, res) => {
 
 
 //Duy Code
+app.get('/',(request, response) => {
+  response.sendFile(path.join(__dirname + '/profile_dv.html'))
+})
+
 app.post('/formData',[
   check('fullname')
   .not().isEmpty().withMessage('Name cannot be empty.')

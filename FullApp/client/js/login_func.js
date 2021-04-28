@@ -1,85 +1,78 @@
+var uid = 0;
+var curUID = 0;
 
-var x = document.getElementById("login");
-var y = document.getElementById("register");
-var z = document.getElementById("btn");
-
-// let form;
-// form = document.getElementById('login');
-// form.onsubmit = sendData1;
-
-function p_register(){
-    x.style.left = "-400px";
-    y.style.left = "50px";
-    z.style.left = "110px";
-    // form = document.getElementById('register');
-    // form.onsubmit = sendData;
-}
-
-function p_login(){
-    x.style.left = "50px";
-    y.style.left = "450px";
-    z.style.left = "0";
-    // form = document.getElementById('login');
-    // form.onsubmit = sendData1;
-}
-
-
-
-// function success_register(){
-//     var r_user = document.querySelector('#r_user').value;
-//     var r_pass = document.querySelector('#r_pass').value;
-//     if(r_user.length <= 4 && r_pass.length <= 6){
-//         alert("Please fill all required field correctly. Username must contain at least 4 characters. Password must have at least 6 characters");
-//         return false;
-//     }
-//     else{
-//         alert("Registeration Successful");
-//         x.style.left = "50px";
-//         y.style.left = "450px";
-//         z.style.left = "0px";
-//     }
-    
-// }
-
-function success_login(target){
+async function success_login(){
     var l_user = document.querySelector('#l_user').value;
     var l_pass = document.querySelector('#l_pass').value;
+    console.log(l_user);
+    var fac = l_user + ',' + l_pass;
     if(l_user.length == 0 || l_pass.length == 0){
         alert("Please fill all required field.");
         return false;
-        
     }
-    else{
-        alert("Registeration Successful");
-        window.location.href = 'Profile.html';
-    }
-}
 
-async function insertUserCred() {
-    var user = document.querySelector('#r_user').value;
-    var pass = document.querySelector('#r_pass').value;
-    console.log(user);
-  
     try {
   
-    const body = {
-        user: user, 
-        pass: pass 
-    };
-    const response = await fetch(`http://localhost:5000/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-    });
-  
-    // location.reload();
-    return false;
+        const response = await fetch(`http://localhost:5000/login/${fac}`);
+        const jsonData = await response.json();
+        let data = [];
+        data = jsonData;
+        if(data.length == 1)
+        {
+            console.log("yes");
+            window.location.href = 'profile_dv.html';
+        }
   
     }catch (err) {
       console.log(err.message);
     }
 }
 
+async function insertUserCred() {
+    const result = await findUID()
+    var user = document.querySelector('#r_user').value;
+    var pass = document.querySelector('#r_pass').value;
+    console.log(uid);
+    var userid = uid;
+    console.log(uid);
+  
+    try {
+  
+        const body = {
+            userid: userid,
+            user: user, 
+            pass: pass 
+        };
+        const response = await fetch(`http://localhost:5000/register`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+        });
+
+        alert("Registration Successful!");
+        window.location.href = 'login.html';
+  
+    }catch (err) {
+        console.log(err.message);
+    }
+}
+
+async function findUID(){
+    try {
+        const response = await fetch(`http://localhost:5000/uid`);
+        const jsonData = await response.json();
+        let data = [];
+        data = jsonData;
+        console.log(data);
+        uid = data[0].userid+1;
+        curUID = data[0].userid;
+        console.log(uid);
+        console.log(curUID);
+  
+    }catch (err) {
+      console.log(err.message);
+    }
+}
 
 
 // function sendData(e){
