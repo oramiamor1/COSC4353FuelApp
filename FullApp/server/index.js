@@ -25,8 +25,10 @@ app.post("/register", async (req, res) => {
       const newTodo = await pool.query(
         `INSERT INTO UserCredentials VALUES(${userid},'${user}',crypt('${pass}',gen_salt('bf'))); `
       );
+      res.json(newTodo.rows);
   
     } catch (err) {
+      alert(err);
       console.error(err.message);
     }
 });

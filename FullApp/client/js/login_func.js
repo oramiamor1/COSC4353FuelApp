@@ -36,7 +36,7 @@ async function insertUserCred() {
     var userid = uid;
     console.log(uid);
   
-    try {
+    try{
   
         const body = {
             userid: userid,
@@ -49,10 +49,13 @@ async function insertUserCred() {
             body: JSON.stringify(body)
         });
 
+        console.log(response);
+        
         alert("Registration Successful!");
         window.location.href = 'login.html';
   
     }catch (err) {
+        alert(err);
         console.log(err.message);
     }
 }
@@ -63,7 +66,7 @@ async function findUID(){
         const jsonData = await response.json();
         let data = [];
         data = jsonData;
-        console.log(data);
+        // console.log(data);
         uid = data[0].userid+1;
         curUID = data[0].userid;
         console.log(uid);
