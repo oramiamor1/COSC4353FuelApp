@@ -167,14 +167,15 @@ h1{
 }
 
 .back1{
-    width: 10%;
+    width: 9%;
     padding: 10px 30px;
     cursor: pointer;
     display: block;
     margin: auto;
-    background: linear-gradient(to right, #10f7ff,#06ffac);
     border: 0;
     outline: none;
     border-radius: 30px;
-    margin-top: 50px;
+    margin-top: -70px;
+    margin-left: 260px;
+    position: absolute;
 }
