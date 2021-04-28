@@ -28,6 +28,6 @@ CREATE TABLE FuelQuote(
 	deliveryAdd TEXT NOT NULL,
 	deliveryDate DATE NOT NULL,
 	suggestedPrice float NOT NULL,
-	total float NOT NULL
+	total float NOT NULL,
 	CONSTRAINT f_userID_fk FOREIGN KEY (userID) REFERENCES UserCredentials(userID) ON DELETE CASCADE
 );
