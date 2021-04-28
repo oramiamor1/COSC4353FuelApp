@@ -1,4 +1,4 @@
-async function insertProf() {
+async function insertfuelF() {
     var gallonsreq = document.querySelector('#gallonsreq').value;
     var deliveryadr = document.querySelector('#deliveryadr').value;
     var ddate = document.querySelector('#ddate').value;
