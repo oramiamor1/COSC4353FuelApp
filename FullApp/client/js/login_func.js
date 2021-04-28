@@ -299,7 +299,7 @@ const displayHist = () => {
         <td >${FuelQuote.orderid}</td>
         <td>${FuelQuote.gallonsreq}</td>
         <td>${FuelQuote.deliveryadd}</td>
-        <td>${FuelQuote.deliverydate}</td>
+        <td>${FuelQuote.deliverydate.substr(0, 10)}</td>
         <td>${FuelQuote.suggestedprice}</td>
         <td>${FuelQuote.total}</td>
         </tr>`;
@@ -343,11 +343,13 @@ async function insertfuelF() {
     // document.getElementById("totalamt").innerHTML = totalAmount;
     ////////
     var ddate = document.getElementById('ddate').value;
-    var newoid = localStorage.oid+1;
+    var newoid = localStorage.getItem("oid");
+    var newoid1 = parseInt(newoid) + 1;
+    console.log(newoid1);
     try {
     const body = {
         userid: localStorage.curUID,
-        orderid: newoid,
+        orderid: newoid1,
         gallonsreq: localStorage.gal, 
         deliveryadr: localStorage.curAdd,
         ddate: ddate,
