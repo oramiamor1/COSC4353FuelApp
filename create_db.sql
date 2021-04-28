@@ -24,10 +24,9 @@ CREATE TABLE ClientInformation(
 );
 
 CREATE TABLE FuelQuote(
-	fuelID SERIAL NOT NULL,
-	gallonReq integer NOT NULL,
+	gallonsReq integer NOT NULL,
 	deliveryAdd TEXT NOT NULL,
 	deliveryDate DATE NOT NULL,
-	total integer NOT NULL,
-	PRIMARY KEY(fuelID)
+	suggestedPrice float NOT NULL,
+	total float NOT NULL
 );
