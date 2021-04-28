@@ -37,7 +37,7 @@ app.get('/login/:fac', async (req, res) => {
   var pass = fac.split(',')[1];
   try {
     console.log(req.body)
-    //this will encrypt the password once it is made
+    //find if login info is correct
     const newTodo = await pool.query(
       `select count(userid) from usercredentials where loginid = '${user}' and password = crypt('${pass}',password); `
     );
@@ -52,7 +52,7 @@ app.get('/uid', async (req, res) => {
 
   try {
     console.log(req.body)
-    //this will encrypt the password once it is made
+    //search for latest userID
     const newTodo = await pool.query(
       `select userid from usercredentials order by userid desc limit 1;`
     );
