@@ -5,6 +5,7 @@ var hist = []
 async function success_login(){
     var l_user = document.querySelector('#l_user').value;
     var l_pass = document.querySelector('#l_pass').value;
+    cur_user = l_user;
     console.log(l_user);
     var fac = l_user + ',' + l_pass;
     if(l_user.length == 0 || l_pass.length == 0){
@@ -20,9 +21,10 @@ async function success_login(){
         data = jsonData;
         if(data[0].count == 1)
         {
-            console.log("yes");
             const result = await findUID(l_user);
             window.location.href = 'transition.html';
+            // alert(result);
+            // window.location.href = 'transition.html';
         }
         else{
             alert("Incorrect Username or Password");
@@ -80,25 +82,31 @@ async function findLastUID(){
         }
         else{
             uid = data[0].userid + 1;
+            // const result = await findUID(cur_user);
         }
-        console.log(uid);
-        console.log(curUID);
+        // console.log(uid);
+        // console.log(curUID);
   
     }catch (err) {
       console.log(err.message);
     }
 }
 
+
+
 async function findUID(l_user){
     var fac = l_user;
     try {
-        const response = await fetch(`http://localhost:5000/uid/${fac}`);
+        const response = await fetch(`http://localhost:5000/uid1/${fac}`);
         const jsonData = await response.json();
+        // return jsonData;
         let data = [];
         data = jsonData;
-        // console.log(data);
-        curUID = data[0].userid;
-        console.log(curUID);
+        console.log(data[0].userid);
+        // setcurUID(data[0].userid);
+        localStorage.curUID = data[0].userid;
+        // curUID = data[0].userid;
+        alert("curuser = " +cur_user + " curuid = " + localStorage.curUID);
   
     }catch (err) {
       console.log(err.message);
@@ -122,9 +130,9 @@ async function selectHistory() {
 
 }
 
-const getHist = async () => {
-    let result = await selectHistory;
-}
+// const getHist = async () => {
+//     let result = await selectHistory;
+// }
 
 const setHist = (data) => {
     hist = data;
@@ -132,7 +140,12 @@ const setHist = (data) => {
 
 if (document.URL.includes("orderhistory.html")) {
     selectHistory();
-  }
+}
+
+if (document.URL.includes("transition.html")) {
+    console.log(localStorage.curUID);
+}
+
 
 const displayHist = () => {
     const orderTable = document.querySelector('#order_hist');
@@ -155,10 +168,63 @@ const displayHist = () => {
 
 
 
+async function insertfuelF() {
+    var gallonsreq = document.querySelector('#gallonsreq').value;
+    var deliveryadr = document.querySelector('#deliveryadr').value;
+    var ddate = document.querySelector('#ddate').value;
+    console.log(gallonsreq);
+    /////
+    var state = document.querySelector('#state').value;
+
+    var locationFac = 0.04;
+    var historyFac = 0;
+    var gallonsreqFac = 0.03;
+    var profitFac = 0.1;
+
+    var currentPrice = 1.50;
+
+    if(state == 'Texas'){
+        locationFac = 0.02;
+    }
+
+    if (gallonsreq > 1000){
+        gallonsreqFac = 0.02;
+    }
+
+    var margin = currentPrice * (locationFac - historyFac + gallonsreqFac + profitFac);
+    var suggestedPrice = currentPrice + margin;
+    var totalAmount = gallonsreq * suggestedPrice;
+
+    document.getElementById("suggestedp").innerHTML = suggestedPrice;
+    document.getElementById("totalamt").innerHTML = totalAmount;
+    ////////
+    try {
+    const body = {
+        gallonsreq: gallonsreq, 
+        deliveryadr: deliveryadr,
+        ddate: ddate,
+    };
+
+    const response = await fetch(`http://localhost:5000/fuelform`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+    });
+  
+    location.reload();
+    return false;
+  
+    }catch (err) {
+      console.log(err.message);
+    }
+}
+
+
+
 //duy
 async function insertProf() {
-    console.log(curUID);
-    var userid = curUID;
+    alert(curUID);
+    var userid = localStorage.curUID;
     var name = document.querySelector('#name').value;
     var add = document.querySelector('#add').value;
     if(document.querySelector('#add2').value == ""){

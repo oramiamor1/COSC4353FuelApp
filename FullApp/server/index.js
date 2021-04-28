@@ -65,15 +65,15 @@ app.get('/uid', async (req, res) => {
   }
 });
 
-app.get('/uid1', async (req, res) => {
+app.get('/uid1/:fac', async (req, res) => {
   const {fac} = req.params;
   try {
     console.log(req.body)
     //search for latest userID
     const newTodo = await pool.query(
-      `select userid from usercredentials where userid = '${fac}' order by userid desc limit 1;`
+      `select userid from usercredentials where loginid = '${fac}' order by userid desc limit 1;`
     );
-
+      console.log(newTodo.rows);
     res.json(newTodo.rows);
   } catch (err) {
     console.error(err.message);
