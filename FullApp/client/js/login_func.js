@@ -1,4 +1,4 @@
-var uid = findUID();
+var uid = 0;
 var curUID = 0;
 
 async function success_login(){
@@ -17,14 +17,10 @@ async function success_login(){
         const jsonData = await response.json();
         let data = [];
         data = jsonData;
-        console.log(data)
         if(data.length == 1)
         {
             console.log("yes");
-            window.location.href = 'transition.html';
-        }
-        else{
-            alert("Incorrect Username or Password");
+            window.location.href = 'profile_dv.html';
         }
   
     }catch (err) {
@@ -33,10 +29,7 @@ async function success_login(){
 }
 
 async function insertUserCred() {
-    // const result = await findUID()
-    if(uid == null){
-        uid = 0;
-    }
+    const result = await findUID()
     var user = document.querySelector('#r_user').value;
     var pass = document.querySelector('#r_pass').value;
     console.log(uid);
@@ -73,59 +66,11 @@ async function findUID(){
         const jsonData = await response.json();
         let data = [];
         data = jsonData;
-        console.log(data.length);
-        if(data.length == 0 || data.length == null){
-            uid = 0;
-        }
-        else{
-            uid = data[0].userid+1;
-            curUID = uid - 1;
-        }
-        // curUID = data[0].userid;
-        // console.log(uid);
-        // console.log(curUID);
-  
-    }catch (err) {
-      console.log(err.message);
-    }
-}
-
-
-//duy
-async function insertProf(){
-    var userid = curUID;
-    var name = document.querySelector('#name').value;
-    var add = document.querySelector('#add').value;
-    if(document.querySelector('#add2').value == ""){
-        var add2 = "null";
-    }
-    else{
-        var add2 = document.querySelector('#add2').value;
-    }
-    var city = document.querySelector('#city').value;
-    var state = document.querySelector('#state').value;
-    var zip = document.querySelector('#zip').value;
-    console.log(name);
-  
-    try {
-    const body = {
-        userid: userid,
-        name: name, 
-        add: add,
-        add2: add2,
-        city: city,
-        state: state,
-        zip: zip
-    };
-
-    const response = await fetch(`http://localhost:5000/profile`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-    });
-    alert("Profile Created");
-    window.location.href = 'transition.html';
-
+        // console.log(data);
+        uid = data[0].userid+1;
+        curUID = data[0].userid;
+        console.log(uid);
+        console.log(curUID);
   
     }catch (err) {
       console.log(err.message);
