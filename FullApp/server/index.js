@@ -65,6 +65,21 @@ app.get('/uid', async (req, res) => {
   }
 });
 
+app.get('/uid1', async (req, res) => {
+  const {fac} = req.params;
+  try {
+    console.log(req.body)
+    //search for latest userID
+    const newTodo = await pool.query(
+      `select userid from usercredentials where userid = '${fac}' order by userid desc limit 1;`
+    );
+
+    res.json(newTodo.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 //William Code
 app.get('/',(request, response) => {
   response.sendFile(path.join(__dirname + '/fuelform.html'))
@@ -181,7 +196,7 @@ app.post("/profile", async (req, res) => {
       `INSERT INTO ClientInformation VALUES(${userid},'${fullname}','${address}','${address2}','${city}','${state}','${zipcode}'); `
     );
 
-    //res.json(newTodo.rows[0]);
+    res.json(newTodo.rows);
   } catch (err) {
     console.error(err.message);
   }
