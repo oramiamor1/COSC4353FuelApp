@@ -8,8 +8,7 @@ CREATE TABLE UserCredentials(
 	userID SERIAL NOT NULL UNIQUE,
 	loginID TEXT NOT NULL UNIQUE,
 	password TEXT NOT NULL,
-	PRIMARY KEY(userID),
-	CONSTRAINT "ClientInformation_userID_fkey" FOREIGN KEY (userID) REFERENCES UserCredentials(userID) ON DELETE CASCADE
+	PRIMARY KEY(userID)
 );
 
 CREATE TABLE ClientInformation(
@@ -20,13 +19,15 @@ CREATE TABLE ClientInformation(
 	city char(20) NOT NULL,
 	state char(20) NOT NULL,
 	zip varchar(5) NOT NULL,
-	CONSTRAINT "ClientInformation_userID_fkey" FOREIGN KEY (userID) REFERENCES UserCredentials(userID) ON DELETE CASCADE
+	CONSTRAINT c_userID_fk FOREIGN KEY (userID) REFERENCES UserCredentials(userID) ON DELETE CASCADE
 );
 
 CREATE TABLE FuelQuote(
+	userID SERIAL NOT NULL,
 	gallonsReq integer NOT NULL,
 	deliveryAdd TEXT NOT NULL,
 	deliveryDate DATE NOT NULL,
 	suggestedPrice float NOT NULL,
 	total float NOT NULL
+	CONSTRAINT f_userID_fk FOREIGN KEY (userID) REFERENCES UserCredentials(userID) ON DELETE CASCADE
 );
