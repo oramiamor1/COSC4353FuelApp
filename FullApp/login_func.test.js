@@ -1,5 +1,5 @@
 // const { expect } = require("@jest/globals");
-const {fetchUser, fetchData,checkGallonReq,testLogin, validateUser, checkPwd,checkName, checkAddress1, checkAddress2, checkCity, checkZipcode,checkGalreq, checkDate, validateDate} = require("./client/js/test1.js");
+const {fetchUser, fetchData,checkGallonReq,testLogin, validateUser, checkPwd,checkName, checkAddress1, checkAddress2, checkCity, checkZipcode,checkGalreq, checkDate, validateDate} = require("./client/js/login_func.js");
 
 test('should num input for positive', () =>{
     const text = checkGallonReq(5);
