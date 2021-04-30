@@ -1,4 +1,3 @@
-
 //current userid
 var uid = findLastUID();
 var curUID = 0;
@@ -9,8 +8,6 @@ var oid = 0;
 var hist = []
 //current address
 var curAdd = '';
-
-
 
 //calc
 var curState = '';
@@ -31,9 +28,7 @@ async function success_login(){
         alert("Please fill all required field.");
         return false;
     }
-
     try {
-  
         const response = await fetch(`http://localhost:5000/login/${fac}`);
         const jsonData = await response.json();
         let data = [];
@@ -42,13 +37,10 @@ async function success_login(){
         {
             const result = await findUID(l_user);
             window.location.href = 'transition.html';
-            // alert(result);
-            // window.location.href = 'transition.html';
         }
         else{
             alert("Incorrect Username or Password");
         }
-  
     }catch (err) {
       console.log(err.message);
     }
@@ -61,12 +53,8 @@ async function insertUserCred() {
     }
     var user = document.querySelector('#r_user').value;
     var pass = document.querySelector('#r_pass').value;
-    console.log(uid);
     var userid = uid;
-    console.log(uid);
-  
     try{
-  
         const body = {
             userid: userid,
             user: user, 
@@ -77,14 +65,9 @@ async function insertUserCred() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body)
         });
-
-        console.log(response);
-        
         alert("Registration Successful!");
         window.location.href = 'login.html';
-  
     }catch (err) {
-        // alert(err);
         console.log(err.message);
     }
 }
@@ -95,13 +78,11 @@ async function findLastUID(){
         const jsonData = await response.json();
         let data = [];
         data = jsonData;
-        // console.log(data);
         if(data.length == 0 || data.length == null){
             uid = 0;
         }
         else{
             uid = data[0].userid + 1;
-            // const result = await findUID(cur_user);
         }
   
     }catch (err) {
@@ -116,16 +97,13 @@ async function findLastOID(){
         const jsonData = await response.json();
         let data = [];
         data = jsonData;
-        // console.log(data);
         if(data.length == 0 || data.length == null){
             localStorage.oid = 0;
         }
         else{
             localStorage.oid = data[0].orderid;
-            // const result = await findUID(cur_user);
         }
         console.log(localStorage.oid);
-  
     }catch (err) {
       console.log(err.message);
     }
@@ -138,15 +116,10 @@ async function findUID(l_user){
     try {
         const response = await fetch(`http://localhost:5000/uid1/${fac}`);
         const jsonData = await response.json();
-        // return jsonData;
         let data = [];
         data = jsonData;
         console.log(data[0].userid);
-        // setcurUID(data[0].userid);
         localStorage.curUID = data[0].userid;
-        // curUID = data[0].userid;
-        // alert("curuser = " +cur_user + " curuid = " + localStorage.curUID);
-  
     }catch (err) {
       console.log(err.message);
     }
@@ -165,7 +138,6 @@ async function selectHistory() {
     } catch (err) {
       console.log(err.message);
     }
-
 }
 
 async function findAdd() {
@@ -187,7 +159,6 @@ async function findAdd() {
 
 async function findGal() {
     var fac = localStorage.curUID;
-    // console.log(fac);
     try {
       const response = await fetch(`http://localhost:5000/findgal/${fac}`);
       const jsonData = await response.json();
@@ -203,7 +174,6 @@ async function findGal() {
 
 async function findState() {
     var fac = localStorage.curUID;
-    // console.log(fac);
     try {
       const response = await fetch(`http://localhost:5000/findState/${fac}`);
       const jsonData = await response.json();
@@ -218,7 +188,6 @@ async function findState() {
 }
 
 const displayAdd = () => {
-    // console.log(localStorage.curAdd);
     document.getElementById('deliveryadr').value = localStorage.curAdd;
 }
 
@@ -247,14 +216,13 @@ async function checkProfile(){
     try {
         const response = await fetch(`http://localhost:5000/checkProfile/${fac}`);
         const jsonData = await response.json();
-          const data = jsonData;
-          if(data[0].count > 0){
-              alert("Sorry you already have a profile!");
-          }
-          else{
-              const result = await insertProf();
-          }
-  
+        const data = jsonData;
+        if(data[0].count > 0){
+            alert("Sorry you already have a profile!");
+        }
+        else{
+            const result = await insertProf();
+        }
     }catch (err) {
         console.log(err.message);
     }
@@ -267,9 +235,7 @@ function change(){
         var historyFac = 0.01;
         var gallonsreqFac = 0.03;
         var profitFac = 0.1;
-
         var currentPrice = 1.50;
-
         var state = localStorage.curState;
         var oldGallons = localStorage.oldGal;
         console.log(state.length);
@@ -289,14 +255,11 @@ function change(){
         else{
             var margin = currentPrice * (locationFac  + gallonsreqFac + profitFac);
         }
-
         var suggestedPrice = currentPrice + margin;
         var totalAmount = ticket * suggestedPrice;
 
         document.getElementById("suggestedp").value = suggestedPrice;
         document.getElementById('totalamt').value = totalAmount;
-
-
         localStorage.gal = ticket;
         localStorage.sug = suggestedPrice;
         localStorage.tot = totalAmount;
@@ -305,11 +268,7 @@ function change(){
         alert("CANNOT BE NEGATIVE");
         window.location.href = "transition.html";
     }
-
-    
 }
-
-
 
 const displayHist = () => {
     const orderTable = document.querySelector('#order_hist');
@@ -328,11 +287,6 @@ const displayHist = () => {
     })
     orderTable.innerHTML = tableHTML;
 }
-
-
-
-
-
 
 async function insertfuelF() {
 
@@ -369,7 +323,6 @@ async function insertfuelF() {
 
 
 async function insertProf() {
-    // alert(curUID);
     var userid = localStorage.curUID;
     var name = document.querySelector('#name').value;
     var add = document.querySelector('#add').value;
@@ -389,9 +342,7 @@ async function insertProf() {
         alert("Please fill all required field.");
         return false;
     }
-
     console.log(name);
-  
     try {
     const body = {
         userid: userid,
@@ -402,149 +353,15 @@ async function insertProf() {
         state: state,
         zip: zip
     };
-
     const response = await fetch(`http://localhost:5000/profile`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
     });
-  
     alert("Profile Created!");
     window.location.href = 'transition.html'
-  
     }catch (err) {
       console.log(err.message);
     }
 }
-
-
-function checkGallonReq(num){
-    if(num > 0){
-        return true;
-    }
-    else{
-        return false;
-    }
-}
-
-function testLogin(user,pass){
-    return `${user} and ${pass}`;
-}
-
-function validateUser(user){
-    if(user.length < 4 || user.length > 20){
-        return false;
-    }
-    else{
-        return true;
-    }
-}
-
-function checkPwd(str) {
-    if (str.length < 6) {
-        return("too_short");
-    } else if (str.length > 50) {
-        return("too_long");
-    } else if (str.search(/\d/) == -1) {
-        return("no_num");
-    } else if (str.search(/[a-zA-Z]/) == -1) {
-        return("no_letter");
-    } else if (str.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) != -1) {
-        return("bad_char");
-    }
-    return("ok");
-}
-
-function checkName(name) {
-    if (name.length == 0) {
-        return("no_name");
-    } 
-    else if (name.length > 50) {
-        return("too_long");
-    } 
-    return("ok");
-}
-
-function checkAddress1(address1){
-    if (address1.length == 0) {
-        return("no_address1");
-    } 
-    else if (address1.length > 100) {
-        return("too_long");
-    } 
-    return("ok");
-}
-
-function checkAddress2(address2){
-    if (address2.length == 0) {
-        return("no_address2");
-    } 
-    else if (address2.length > 100) {
-        return("too_long");
-    } 
-    return("ok");
-}
-
-function checkCity(city){
-    if (city.length == 0) {
-        return("no_city");
-    } 
-    else if (city.length > 100) {
-        return("too_long");
-    } 
-    return("ok");
-}
-
-function checkZipcode(zipcode){
-    if (zipcode.length < 5) {
-        return("too_short");
-    } 
-    else if (zipcode.length > 9) {
-        return("too_long");
-    } 
-    return("ok");
-}
-
-function checkGalreq(gallonsreq) {
-    if (gallonsreq.length == 0) {
-        return("no_request");
-    }
-    else if (gallonsreq.length > 50) {
-        return("too_long");
-    }
-    return("ok");
-}
-
-function checkDate(ddate){
-  if ((ddate.length == 0) || ddate == null){
-    return("no_date");
-  }
-  return("ok");
-}
-
-function validateDate(ddate){
-  let today = new Date();
-  if((ddate - today)<0){
-    return false;
-  }
-  else{
-    return true;
-  }
-}
-
-module.exports.checkGallonReq = checkGallonReq;
-module.exports.checkPwd = checkPwd;
-module.exports.testLogin = testLogin;
-module.exports.validateUser = validateUser;
-
-
-module.exports.checkName = checkName;
-module.exports.checkAddress1 = checkAddress1;
-module.exports.checkAddress2 = checkAddress2;
-module.exports.checkCity = checkCity;
-module.exports.checkZipcode = checkZipcode;
-
-module.exports.checkGalreq = checkGalreq;
-module.exports.checkDate = checkDate;
-module.exports.validateDate = validateDate;
 
