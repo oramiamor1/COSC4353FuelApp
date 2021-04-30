@@ -1,5 +1,3 @@
-// let today = new Date().toISOString().substr(0, 10);
-// document.querySelector("#ddate").value = document.querySelector("#ddate").min = today;
 
 //current userid
 var uid = findLastUID();
@@ -28,7 +26,7 @@ async function success_login(){
     cur_user = l_user;
     console.log(l_user);
     var fac = l_user + ',' + l_pass;
-    //validation-ish
+
     if(l_user.length == 0 || l_pass.length == 0){
         alert("Please fill all required field.");
         return false;
@@ -105,8 +103,6 @@ async function findLastUID(){
             uid = data[0].userid + 1;
             // const result = await findUID(cur_user);
         }
-        // console.log(uid);
-        // console.log(curUID);
   
     }catch (err) {
       console.log(err.message);
@@ -339,35 +335,7 @@ const displayHist = () => {
 
 
 async function insertfuelF() {
-    // var gallonsreq = document.querySelector('#gallonsreq').value;
-    // var deliveryadr = document.querySelector('#deliveryadr').value;
-    // var ddate = document.querySelector('#ddate').value;
-    // console.log(gallonsreq);
-    // /////
-    // var state = document.querySelector('#state').value;
 
-    // var locationFac = 0.04;
-    // var historyFac = 0;
-    // var gallonsreqFac = 0.03;
-    // var profitFac = 0.1;
-
-    // var currentPrice = 1.50;
-
-    // if(state == 'Texas'){
-    //     locationFac = 0.02;
-    // }
-
-    // if (gallonsreq > 1000){
-    //     gallonsreqFac = 0.02;
-    // }
-
-    // var margin = currentPrice * (locationFac - historyFac + gallonsreqFac + profitFac);
-    // var suggestedPrice = currentPrice + margin;
-    // var totalAmount = gallonsreq * suggestedPrice;
-
-    // document.getElementById("suggestedp").innerHTML = suggestedPrice;
-    // document.getElementById("totalamt").innerHTML = totalAmount;
-    ////////
     var ddate = document.getElementById('ddate').value;
     var newoid = localStorage.getItem("oid");
     var newoid1 = parseInt(newoid) + 1;
@@ -399,7 +367,7 @@ async function insertfuelF() {
 
 
 
-//duy
+
 async function insertProf() {
     // alert(curUID);
     var userid = localStorage.curUID;
@@ -450,78 +418,133 @@ async function insertProf() {
 }
 
 
-// function sendData(e){
-//     e.preventDefault();
+function checkGallonReq(num){
+    if(num > 0){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 
-//     let formData = new FormData(form);
+function testLogin(user,pass){
+    return `${user} and ${pass}`;
+}
 
-//     let Params = {
-//         headers: {
-//             'Content-type': 'application/json'
-//         },
-//         body: JSON.stringify({
-//             user1: formData.get('user1'),
-//             pass1: formData.get('pass1'),
-//         }),
-//         method: "POST"
-//     }
+function validateUser(user){
+    if(user.length < 4 || user.length > 20){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
 
-//     fetch('http://localhost:3000/regisData', Params)
-//     .then(response => response.json())
-//     .then(data => {
-//         if(data.success === "Ok"){
-//             console.log("success");
-//         }
-//         else{
-//             let error = document.querySelector('.error');
+function checkPwd(str) {
+    if (str.length < 6) {
+        return("too_short");
+    } else if (str.length > 50) {
+        return("too_long");
+    } else if (str.search(/\d/) == -1) {
+        return("no_num");
+    } else if (str.search(/[a-zA-Z]/) == -1) {
+        return("no_letter");
+    } else if (str.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) != -1) {
+        return("bad_char");
+    }
+    return("ok");
+}
 
-//             error.innerHTML = "";
-//             document.querySelector('.errorContainer').style.display = "block";
-//             data.errors.forEach(function(err){
-//                 error.innerHTML += `<li>* ${err.msg}</li>`;
-//             });
-//         }
-        
-//     })
-//     .catch(err => console.log(err + 'help'))
-// }
+function checkName(name) {
+    if (name.length == 0) {
+        return("no_name");
+    } 
+    else if (name.length > 50) {
+        return("too_long");
+    } 
+    return("ok");
+}
 
-// function sendData1(e){
-//     e.preventDefault();
+function checkAddress1(address1){
+    if (address1.length == 0) {
+        return("no_address1");
+    } 
+    else if (address1.length > 100) {
+        return("too_long");
+    } 
+    return("ok");
+}
+
+function checkAddress2(address2){
+    if (address2.length == 0) {
+        return("no_address2");
+    } 
+    else if (address2.length > 100) {
+        return("too_long");
+    } 
+    return("ok");
+}
+
+function checkCity(city){
+    if (city.length == 0) {
+        return("no_city");
+    } 
+    else if (city.length > 100) {
+        return("too_long");
+    } 
+    return("ok");
+}
+
+function checkZipcode(zipcode){
+    if (zipcode.length < 5) {
+        return("too_short");
+    } 
+    else if (zipcode.length > 9) {
+        return("too_long");
+    } 
+    return("ok");
+}
+
+function checkGalreq(gallonsreq) {
+    if (gallonsreq.length == 0) {
+        return("no_request");
+    }
+    else if (gallonsreq.length > 50) {
+        return("too_long");
+    }
+    return("ok");
+}
+
+function checkDate(ddate){
+  if ((ddate.length == 0) || ddate == null){
+    return("no_date");
+  }
+  return("ok");
+}
+
+function validateDate(ddate){
+  let today = new Date();
+  if((ddate - today)<0){
+    return false;
+  }
+  else{
+    return true;
+  }
+}
+
+module.exports.checkGallonReq = checkGallonReq;
+module.exports.checkPwd = checkPwd;
+module.exports.testLogin = testLogin;
+module.exports.validateUser = validateUser;
 
 
-//     let formData = new FormData(form);
+module.exports.checkName = checkName;
+module.exports.checkAddress1 = checkAddress1;
+module.exports.checkAddress2 = checkAddress2;
+module.exports.checkCity = checkCity;
+module.exports.checkZipcode = checkZipcode;
 
+module.exports.checkGalreq = checkGalreq;
+module.exports.checkDate = checkDate;
+module.exports.validateDate = validateDate;
 
-
-//     let Params = {
-//         headers: {
-//             'Content-type': 'application/json'
-//         },
-//         body: JSON.stringify({
-//             user: formData.get('user'),
-//             pass: formData.get('pass'),
-//         }),
-//         method: "POST"
-//     }
-
-//     fetch('http://localhost:3000/logData', Params)
-//     .then(response => response.json())
-//     .then(data => {
-
-//         if(data.success === "Ok"){
-//             console.log("success");
-//         }
-//         else{
-//             let error = document.querySelector('.error');
-
-//             error.innerHTML = "";
-//             document.querySelector('.errorContainer').style.display = "block";
-//             data.errors.forEach(function(err){
-//                 error.innerHTML += `<li>* ${err.msg}</li>`;
-//             });
-//         }
-        
-//     })
-//     .catch(error => console.log(error));
-// }
