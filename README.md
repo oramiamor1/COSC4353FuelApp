@@ -17,3 +17,5 @@ install Live Server extension for VSCode
 
 Inside the FullApp folder, navigave into server folder then run "node index.js" in order to get the server up.
 After that right click "Login.html" and "Open with Live Server" to get started.
+
+[Power Point Slide with Overview, Installation Instructions, and Contributions](https://docs.google.com/presentation/d/11XB4Z8USXCrIzXUNFKK7poEQjL-p9uVPmGEqlGyxDek/edit?usp=sharing)
